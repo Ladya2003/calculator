@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from 'react';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
-function App() {
+const App = () => {
+  const handleLogin = (response) => {
+    console.log(response);
+    // Verify the token on your backend server
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GoogleOAuthProvider clientId="560836881551-ffaqd19krr1o5ef8ategm9dlkjol80ij.apps.googleusercontent.com">
+      <div className="App">
+        <h1>Calculator Application</h1>
+        <GoogleLogin onSuccess={handleLogin} onError={() => console.log('Login Failed')} />
+      </div>
+    </GoogleOAuthProvider>
   );
-}
+};
 
 export default App;
