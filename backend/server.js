@@ -1,4 +1,5 @@
 // backend/server.js
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -10,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/calculator';
-mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoUri);
 
 const CalculationSchema = new mongoose.Schema({
   total: Number,
