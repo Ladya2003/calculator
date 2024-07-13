@@ -9,7 +9,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb+srv://admin:H4_H6WtcYm!k_-c@cluster0.devd2pu.mongodb.net/calculator', { useNewUrlParser: true, useUnifiedTopology: true });
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/calculator';
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const CalculationSchema = new mongoose.Schema({
   total: Number,
@@ -32,6 +33,6 @@ app.get('/calculations', async (req, res) => {
   res.send(calculations);
 });
 
-app.listen(5000, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log('Server is running on port 5000');
 });
