@@ -10,7 +10,7 @@ const Calculator = () => {
 
   useEffect(() => {
     const fetchCalculations = async () => {
-      const response = await axios.get('http://localhost:5000/calculations');
+      const response = await axios.get('https://calculator-d04j.onrender.com/calculations');
       setCalculations(response.data);
     };
 
@@ -27,7 +27,7 @@ const Calculator = () => {
 
   const saveResults = async () => {
     if (results) {
-      const response = await axios.post('http://localhost:5000/save', results);
+      const response = await axios.post('https://calculator-d04j.onrender.com/save', results);
       if (response.data.message === 'Calculation saved successfully!') {
         setCalculations([...calculations, results]); // Add new result to the table
         alert('Results saved successfully!');
