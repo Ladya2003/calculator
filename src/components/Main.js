@@ -12,26 +12,26 @@ const Main = () => {
   const isAuthenticated = !!localStorage.getItem('token');
 
   return (
-    <Router>
+    <Router basename="/calculator">
       <div className="App">
         <header>
           <nav>
             <ul>
-              <li><Link to="/calculator/main">Галоўная</Link></li>
-              <li><Link to="/calculator/teachers">Настаўнікі</Link></li>
-              <li><Link to="/calculator/students">Студэнты</Link></li>
-              <li><Link to="/calculator/settings">Налады</Link></li>
+              <li><Link to="/main">Main</Link></li>
+              <li><Link to="/teachers">Teachers</Link></li>
+              <li><Link to="/students">Students</Link></li>
+              <li><Link to="/settings">Settings</Link></li>
               {isAuthenticated && <LogoutButton />}
             </ul>
           </nav>
         </header>
         <Routes>
-          <Route path="/calculator/login" element={<Login />} />
-          <Route path="/calculator/main" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Calculator} />} />
-          <Route path="/calculator/teachers" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Teachers} />} />
-          <Route path="/calculator/students" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Students} />} />
-          <Route path="/calculator/settings" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Settings} />} />
-          <Route path="/calculator" element={<Navigate to="/calculator/login" />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/main" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Calculator} />} />
+          <Route path="/teachers" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Teachers} />} />
+          <Route path="/students" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Students} />} />
+          <Route path="/settings" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Settings} />} />
+          <Route path="/" element={<Navigate to="/login" />} />
         </Routes>
       </div>
     </Router>
@@ -39,7 +39,7 @@ const Main = () => {
 };
 
 const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => {
-  return isAuthenticated ? <Component {...rest} /> : <Navigate to="/calculator/login" />;
+  return isAuthenticated ? <Component {...rest} /> : <Navigate to="/login" />;
 };
 
 export default Main;
