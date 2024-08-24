@@ -10,9 +10,6 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      // TODO: remove
-      // const response = await axios.post('https://calculator-d04j.onrender.com/register', { login, password, confirmPassword });
-      // const response = await axios.post('http://localhost:5000/register', { login, password, confirmPassword });
       const response = await createUser({ login, password, confirmPassword });
       alert(response.data.message);
       setLogin('');

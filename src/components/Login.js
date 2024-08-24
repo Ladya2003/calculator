@@ -9,8 +9,6 @@ const Login = ({ onLogin }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // TODO: remove
-      // const response = await axios.post('https://calculator-d04j.onrender.com/login', { login, password });
       const response = await loginUser({ login, password });
       if (response?.data) localStorage.setItem('token', response?.data?.token);
       onLogin();
