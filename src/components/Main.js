@@ -31,7 +31,7 @@ const Main = () => {
           <Route path="/teachers" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Teachers} />} />
           <Route path="/students" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Students} />} />
           <Route path="/settings" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Settings} />} />
-          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/" element={<Navigate to="/main" />} />
         </Routes>
       </div>
     </Router>
