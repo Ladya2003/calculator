@@ -6,3 +6,5 @@ git .
 git commit
 git push
 npm run deploy
+
+this was new code will be deployed to both backend and client. if render doesn't make auto deploy then go to render and make it manually
