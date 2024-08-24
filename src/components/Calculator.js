@@ -137,17 +137,17 @@ const Calculator = () => {
 
   const deleteRow = async (index) => {
     const response = await deleteCalculation(rows[index]._id);
-    if (response.data.message === 'Calculation deleted successfully') {
+    if (response.data.message === 'Разлік паспяхова выдалены') {
       const updatedRows = rows.filter((_, i) => i !== index);
       setRows(updatedRows);
 
-      alert('Calculation deleted successfully!');
+      alert('Разлік паспяхова выдалены!');
     }
     
   };
 
   const addCalculation = async () => {
-    if (addButtonDisabled) return alert('Please fill all fields!'); 
+    if (addButtonDisabled) return alert('Калі ласка, запоўніце ўсе палі!'); 
 
     const response = await createCalculation(newCalculation);
     setRows([...rows, response.data.calculation]);
@@ -164,36 +164,36 @@ const Calculator = () => {
       comments: ''
     });
 
-    alert('Calculation added successfully!');
+    alert('Разлік паспяхова дададзены!');
     if (window !== 'undefined') window.location.reload();
   };
 
   return (
     <div className="calculator-container">
-      <h4 style={{ 'text-align': 'left' }}>Add New Calculation</h4>
+      <h4 style={{ 'text-align': 'left' }}>Дадаць новы разлік</h4>
 
       <table className="calculator-table">
         <thead>
           <tr>
             <th>№</th>
-            <th>Currency</th>
-            <th>Teacher Name</th>
-            <th>Student Name</th>
-            <th>Lessons</th>
-            <th>Lesson Cost</th>
-            <th>Lessons Cost</th>
-            <th>Tax Percentage</th>
-            <th>Tax</th>
-            <th>Teachers Cost for 90 mins</th>
-            <th>Teachers Minutes</th>
-            <th>Teacher Salary</th>
-            <th>Firm Percentage</th>
-            <th>Firm Money</th>
-            <th>Kirill Money</th>
-            <th>Marina Money</th>
-            <th>Currencies</th>
-            <th>Comments</th>
-            <th>Actions</th>
+            <th>Валюта</th>
+            <th>Імя настаўніка</th>
+            <th>Імя вучня</th>
+            <th>Урокі</th>
+            <th>Кошт урока</th>
+            <th>Кошт урокаў</th>
+            <th>Працэнт падатку</th>
+            <th>Падатак</th>
+            <th>Кошт настаўніка за 90 хвілін</th>
+            <th>Хвіліны настаўніка</th>
+            <th>Зарплата настаўніка</th>
+            <th>Працэнт фірмы</th>
+            <th>Грошы фірмы</th>
+            <th>Грошы Кірыла</th>
+            <th>Грошы Марыны</th>
+            <th>Валюты</th>
+            <th>Каментары</th>
+            <th>Дзеянні</th>
           </tr>
         </thead>
         <tbody>
@@ -253,7 +253,7 @@ const Calculator = () => {
               <textarea value={newCalculation.comments} onChange={(e) => setNewCalculation({ ...newCalculation, comments: e.target.value })}></textarea>
             </td>
             <td>
-              <button onClick={addCalculation}>Add Calculation</button>
+              <button onClick={addCalculation}>Дадаць разлік</button>
             </td>
           </tr>
 
@@ -271,7 +271,7 @@ const Calculator = () => {
 
           <tr>
             <td colSpan={19}>
-            <h4 style={{ 'text-align': 'left' }}>All Calculations</h4>
+            <h4 style={{ 'text-align': 'left' }}>Усе разлікі</h4>
             </td>
           </tr>
 
@@ -338,7 +338,7 @@ const Calculator = () => {
                 <textarea value={row.comments} onChange={(e) => updateRow(index, 'comments', e.target.value)}></textarea>
               </td>
               <td>
-                <button onClick={() => deleteRow(index)}>Delete</button>
+                <button onClick={() => deleteRow(index)}>Выдаліць</button>
               </td>
             </tr>
 
@@ -357,7 +357,7 @@ const Calculator = () => {
                     Агульная сума на фірму: {rows.filter((r) => dayjs(r.createdAt).isSame(row.createdAt, 'month')).reduce((acc, r) => acc + (r.lessons * r.lessonCost) * r.firmPercentage * convertedAmounts[r.currency] / 100, 0).toFixed(2)}
                   </td>
                   <td colSpan={2}>
-                    Агульная доля кiрылла: {rows.filter((r) => dayjs(r.createdAt).isSame(row.createdAt, 'month')).reduce((acc, r) => acc + ((r.lessons * r.lessonCost) - ((r.lessons * r.lessonCost) * r.taxPercentage * convertedAmounts[r.currency] / 100) - ((r.lessons * r.lessonCost) * r.firmPercentage / 100) - ((r.teachersMinutes * r.teachersCostFor90Mins) / 90)) / 2, 0).toFixed(2)}
+                    Агульная доля кiрылла: {rows.filter((r) => dayjs(r.createdAt).isSame(row.createdAt, 'month')).reduce((acc, r) => acc + ((r.lessons * r.lessonCost) - ((r.lessons * r.lessonCost) * r.taxPercentage / 100) - ((r.lessons * r.lessonCost) * r.firmPercentage / 100) - ((r.teachersMinutes * r.teachersCostFor90Mins) / 90)) * convertedAmounts[r.currency] / 2, 0).toFixed(2)}
                   </td>
                 </tr>
               }
@@ -370,11 +370,3 @@ const Calculator = () => {
 };
 
 export default Calculator;
-
-// TODO: styles everywhere; 
-// finish testing Main; done
-// translate to Belarusian; 
-// calculations in the Teachers and Students; done
-// settings page; done
-// loader untill auth token is fetching; just check when token is undefined and show loader or smth;
-// when deploying don't forget to change env variables;

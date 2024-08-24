@@ -9,7 +9,7 @@ const Settings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!login || !password) {
-      return setMessage('Please enter new login or password');
+      return setMessage('Калі ласка, увядзіце новы лагін або пароль');
     }
     const response = await updateUser({ login, password });
     alert(response.data.message);
@@ -28,19 +28,19 @@ const Settings = () => {
 
   return (
     <div>
-      <h2>Settings</h2>
+      <h2>Налады</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          New Login:
+          Новы лагін:
           <input type="text" value={login} onChange={(e) => setLogin(e.target.value)} />
         </label>
         <br />
         <label>
-          New Password:
+          Новы пароль:
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </label>
         <br />
-        <button type="submit">Update</button>
+        <button type="submit">Абнавіць</button>
       </form>
       {message && <p style={{color: 'red'}}>{message}</p>}
     </div>

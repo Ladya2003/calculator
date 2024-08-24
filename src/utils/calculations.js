@@ -24,5 +24,5 @@ export const getBackgroundColor = (index, row, previousRow) => {
 };
 
 export const isDifferentMonth = (currentRow, nextRow) => {
-    return !dayjs(currentRow?.createdAt).isSame(nextRow?.createdAt, 'month');
+    return !nextRow || !dayjs(currentRow?.createdAt).isSame(nextRow?.createdAt, 'month');
 };

@@ -18,10 +18,7 @@ const App = () => {
     const token = localStorage.getItem('token');
     if (token) {
       try {
-        // TODO: remove
-        // const response = await axios.get('https://calculator-d04j.onrender.com/protection', {
-          // const token = localStorage.getItem('token');
-          setIsLoading(true);
+        setIsLoading(true);
 
         const response = await getProtectedUser(token);
         response?.data && setRole(response?.data?.role);
@@ -30,8 +27,8 @@ const App = () => {
       } catch (error) {
         localStorage.removeItem('token');
         setRole(null);
-        if (error?.response?.status === 403) return alert('You are not an admin');
-        alert(error?.response?.status === 401 ? 'Access denied' : 'Invalid token');
+        if (error?.response?.status === 403) return alert('Вы не адміністратар');
+        alert(error?.response?.status === 401 ? 'Доступ забаронены' : 'Няправільны токен');
       }
     }
   };

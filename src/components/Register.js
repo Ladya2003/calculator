@@ -25,10 +25,10 @@ const Register = () => {
 
   return (
     <form onSubmit={handleRegister}>
-      <input type="text" placeholder="Login" value={login} onChange={(e) => setLogin(e.target.value)} required />
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-      <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-      <button type="submit">Register</button>
+      <input type="text" placeholder="Лагін" value={login} onChange={(e) => setLogin(e.target.value)} required />
+      <input type="password" placeholder="Пароль" value={password} onChange={(e) => setPassword(e.target.value)} required />
+      <input type="password" placeholder="Пацвердзіць пароль" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+      <button type="submit">Зарэгістравацца</button>
     </form>
   );
 };

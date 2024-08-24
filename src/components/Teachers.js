@@ -68,13 +68,13 @@ const Teachers = () => {
   };
 
   const addTeacher = async () => {
-    if (addButtonDisabled) return alert('Please fill all fields!'); 
+    if (addButtonDisabled) return alert('Калі ласка, запоўніце ўсе палі!'); 
 
     const response = await createTeacher(newTeacher);
     setTeachers([...teachers, response.data.teacher]);
     setNewTeacher({ name: '', rating: MemberRating.Good, status: MemberStatus.Working, language: MemberLanguage.German, comments: '' });
 
-    alert('Teacher added successfully!');
+    alert('Настаўнік паспяхова дададзены!');
   };
 
   const updateTeacherFunction = async (index, field, value) => {
@@ -86,30 +86,30 @@ const Teachers = () => {
 
   const deleteTeacherFunction = async (index) => {
     const response = await deleteTeacher(teachers[index]._id);
-    if (response.data.message === 'Teacher deleted successfully') {
+    if (response.data.message === 'Настаўнік паспяхова выдалены') {
       const updatedTeachers = teachers.filter((_, i) => i !== index);
       setTeachers(updatedTeachers);
 
-      alert('Teacher deleted successfully!');
+      alert('Настаўнік паспяхова выдалены!');
     }
   }
 
   return (
     <div className="teacher-container">
-      <h2>Teachers</h2>
+      <h2>Настаўнікі</h2>
       <table className="teacher-table">
         <thead>
           <tr>
             <th></th>
-            <th>Name</th>
-            <th>Rating</th>
-            <th>Comments</th>
-            <th>Status</th>
-            <th>Language</th>
-            <th>Number of Students (Last Month)</th>
-            <th>Salary (Last Month)</th>
-            <th>Number of Students (All Time)</th>
-            <th>Salary (All Time)</th>
+            <th>Імя</th>
+            <th>Рэйтынг</th>
+            <th>Каментары</th>
+            <th>Статус</th>
+            <th>Мова</th>
+            <th>Колькасць студэнтаў (за мінулы месяц)</th>
+            <th>Заробак (за мінулы месяц)</th>
+            <th>Колькасць студэнтаў (за ўвесь час)</th>
+            <th>Заробак (за ўвесь час)</th>
           </tr>
         </thead>
         <tbody>
@@ -195,7 +195,7 @@ const Teachers = () => {
               </select>
             </td>
             <td colSpan="1">
-              <button onClick={addTeacher}>Add Teacher</button>
+              <button onClick={addTeacher}>Дадаць настаўніка</button>
             </td>
           </tr>
           <tr>

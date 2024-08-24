@@ -1,18 +1,18 @@
 const MemberRating = {
-    Good: 'Good',
-    Bad: 'Bad',
-    VeryBad: 'Very Bad',
+    Good: 'Добры',
+    Bad: 'Дрэнны',
+    VeryBad: 'Вельмі дрэнны',
 };
 
 const MemberStatus = {
-    Working: 'Working',
-    Fired: 'Fired',
+    Working: 'Працуе',
+    Fired: 'Звольнены',
 };
 
 const MemberLanguage = {
-    German: 'German',
-    English: 'English',
-    French: 'French',
+    German: 'Нямецкая',
+    English: 'Англійская',
+    French: 'Французская',
 };
 
 const MemberCurrency = {

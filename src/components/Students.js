@@ -59,13 +59,13 @@ const Students = () => {
   };
 
   const addStudent = async () => {
-    if (addButtonDisabled) return alert('Please fill all fields!'); 
+    if (addButtonDisabled) return alert('Калі ласка, запоўніце ўсе палі!'); 
 
     const response = await createStudent(newStudent);
     setStudents([...students, response.data.student]);
     setNewStudent({ name: '', rating: MemberRating.Good, status: MemberStatus.Working, language: MemberLanguage.German, comments: '' });
 
-    alert('Student added successfully!');
+    alert('Студэнт паспяхова дададзены!');
   };
 
   const updateStudentFunction = async (index, field, value) => {
@@ -77,28 +77,28 @@ const Students = () => {
 
   const deleteStudentFunction = async (index) => {
     const response = await deleteStudent(students[index]._id);
-    if (response.data.message === 'Student deleted successfully') {
+    if (response.data.message === 'Студэнт паспяхова выдалены') {
       const updatedStudents = students.filter((_, i) => i !== index);
       setStudents(updatedStudents);
 
-      alert('Student deleted successfully!');
+      alert('Студэнт паспяхова выдалены!');
     }
   }
 
   return (
     <div className="student-container">
-      <h2>Students</h2>
+      <h2>Студэнты</h2>
       <table className="student-table">
         <thead>
           <tr>
             <th></th>
-            <th>Name</th>
-            <th>Rating</th>
-            <th>Comments</th>
-            <th>Status</th>
-            <th>Language</th>
-            <th>Money from Student (Last Month)</th>
-            <th>Money from Student (All Time)</th>
+            <th>Імя</th>
+            <th>Рэйтынг</th>
+            <th>Каментары</th>
+            <th>Статус</th>
+            <th>Мова</th>
+            <th>Грошы ад студэнта (за мінулы месяц)</th>
+            <th>Грошы ад студэнта (за ўвесь час)</th>
           </tr>
         </thead>
         <tbody>
@@ -114,7 +114,7 @@ const Students = () => {
             <tr key={index}>
                <td>
                 {index + 1}
-                {/* <button onClick={() => deleteStudentFunction(index)}>Delete</button> */}
+                {/* <button onClick={() => deleteStudentFunction(index)}>Выдаліць</button> */}
               </td>
               <td>
                 <input type="text" value={student.name} onChange={(e) => updateStudentFunction(index, 'name', e.target.value)} />
@@ -182,7 +182,7 @@ const Students = () => {
               </select>
             </td>
             <td colSpan="1">
-              <button onClick={addStudent}>Add Student</button>
+              <button onClick={addStudent}>Дадаць студэнта</button>
             </td>
           </tr>
         </tbody>

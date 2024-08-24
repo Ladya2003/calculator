@@ -17,7 +17,7 @@ exports.updateStudent = async (req, res) => {
   const { _id, name, rating, comments, status, language } = req.body;
   const student = await Student.findById(_id);
   if (!student) {
-    return res.status(404).send({ message: 'Student not found' });
+    return res.status(404).send({ message: 'Студэнт не знойдзены' });
   }
   student.name = name;
   student.rating = rating;
@@ -32,5 +32,5 @@ exports.deleteStudent = async (req, res) => {
   const { id } = req.params;
   const studentId = new mongoose.Types.ObjectId(id);
   await Student.findByIdAndDelete(studentId);
-  res.send({ message: 'Student deleted successfully' });
+  res.send({ message: 'Студэнт паспяхова выдалены' });
 }

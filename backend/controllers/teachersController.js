@@ -17,7 +17,7 @@ exports.updateTeacher = async (req, res) => {
   const { _id, name, rating, comments, status, language } = req.body;
   const teacher = await Teacher.findById(_id);
   if (!teacher) {
-    return res.status(404).send({ message: 'Teacher not found' });
+    return res.status(404).send({ message: 'Настаўнік не знойдзены' });
   }
   teacher.name = name;
   teacher.rating = rating;
@@ -32,5 +32,5 @@ exports.deleteTeacher = async (req, res) => {
   const { id } = req.params;
   const teacherId = new mongoose.Types.ObjectId(id);
   await Teacher.findByIdAndDelete(teacherId);
-  res.send({ message: 'Teacher deleted successfully' });
+  res.send({ message: 'Настаўнік паспяхова выдалены' });
 }
