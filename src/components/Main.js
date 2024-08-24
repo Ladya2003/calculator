@@ -26,12 +26,12 @@ const Main = () => {
           </nav>
         </header>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/main" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Calculator} />} />
-          <Route path="/teachers" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Teachers} />} />
-          <Route path="/students" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Students} />} />
-          <Route path="/settings" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Settings} />} />
-          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/calculator/login" element={<Login />} />
+          <Route path="/calculator/main" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Calculator} />} />
+          <Route path="/calculator/teachers" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Teachers} />} />
+          <Route path="/calculator/students" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Students} />} />
+          <Route path="/calculator/settings" element={<PrivateRoute isAuthenticated={isAuthenticated} component={Settings} />} />
+          <Route path="/calculator" element={<Navigate to="/calculator/login" />} />
         </Routes>
       </div>
     </Router>
@@ -39,7 +39,7 @@ const Main = () => {
 };
 
 const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => {
-  return isAuthenticated ? <Component {...rest} /> : <Navigate to="/login" />;
+  return isAuthenticated ? <Component {...rest} /> : <Navigate to="/calculator/login" />;
 };
 
 export default Main;
