@@ -9,10 +9,13 @@ import { displayCurrency, getBackgroundColor, isDifferentMonth } from '../utils/
 import LoaderComponent from './LoaderComponent';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
+import { useNavigate } from 'react-router-dom';
 
 dayjs.locale('ru');
 
 const Calculator = () => {
+  const navigate = useNavigate();
+
   const [rows, setRows] = useState([]);
   const [currencies, setCurrencies] = useState({
     [MemberCurrency.PLN]: 0,
@@ -165,6 +168,7 @@ const Calculator = () => {
     });
 
     alert('Разлік паспяхова дададзены!');
+    navigate('/main');
     if (window !== 'undefined') window.location.reload();
   };
 
