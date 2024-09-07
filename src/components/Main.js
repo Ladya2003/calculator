@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import Calculator from './Calculator';
 import Teachers from './Teachers';
 import Students from './Students';
@@ -12,7 +12,6 @@ const Main = () => {
   const isAuthenticated = !!localStorage.getItem('token');
 
   return (
-    // change this to '' for locals
     <Router basename='/calculator'>
       <div className="App">
         <header>
