@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import Calculator from './Calculator';
 import Teachers from './Teachers';
 import Students from './Students';
@@ -10,9 +10,11 @@ import './styles/Main.css';
 
 const Main = () => {
   const isAuthenticated = !!localStorage.getItem('token');
+  
+  const basename = process.env.NODE_ENV === 'production' ? '/calculator' : '';
 
   return (
-    <Router basename="/calculator">
+    <Router basename={basename}>
       <div className="App">
         <header>
           <nav>
