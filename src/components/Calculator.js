@@ -168,7 +168,7 @@ const Calculator = () => {
     });
 
     alert('Разлік паспяхова дададзены!');
-    navigate('/main');
+    navigate('/');
     if (window !== 'undefined') window.location.reload();
   };
 
