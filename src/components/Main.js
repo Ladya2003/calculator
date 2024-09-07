@@ -10,11 +10,10 @@ import './styles/Main.css';
 
 const Main = () => {
   const isAuthenticated = !!localStorage.getItem('token');
-  
-  const basename = process.env.NODE_ENV === 'production' ? '/calculator' : '';
 
   return (
-    <Router basename={basename}>
+    // change this to '' for locals
+    <Router basename='/calculator'>
       <div className="App">
         <header>
           <nav>
