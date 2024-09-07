@@ -153,7 +153,7 @@ const Calculator = () => {
     if (addButtonDisabled) return alert('Калі ласка, запоўніце ўсе палі!'); 
 
     const response = await createCalculation(newCalculation);
-    setRows([...rows, response.data.calculation]);
+    setRows([response.data.calculation, ...rows]);
     setNewCalculation({
       currency: MemberCurrency.PLN,
       teacherName: teachers[0]?.name, 
@@ -168,8 +168,7 @@ const Calculator = () => {
     });
 
     alert('Разлік паспяхова дададзены!');
-    navigate('/');
-    if (window !== 'undefined') window.location.reload();
+    // if (window !== 'undefined') window.location.reload();
   };
 
   return (
