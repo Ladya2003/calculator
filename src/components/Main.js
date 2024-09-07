@@ -17,10 +17,10 @@ const Main = () => {
         <header>
           <nav>
             <ul>
-              <li><Link to="/main">Main</Link></li>
-              <li><Link to="/teachers">Teachers</Link></li>
-              <li><Link to="/students">Students</Link></li>
-              <li><Link to="/settings">Settings</Link></li>
+              <li><Link to="/main">Галоўная</Link></li>
+              <li><Link to="/teachers">Настаўнікі</Link></li>
+              <li><Link to="/students">Студэнты</Link></li>
+              <li><Link to="/settings">Налады</Link></li>
               {isAuthenticated && <LogoutButton />}
             </ul>
           </nav>

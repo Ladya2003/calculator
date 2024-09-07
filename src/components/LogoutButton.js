@@ -1,11 +1,12 @@
 import React from 'react';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const LogoutButton = () => {
+  const navigate = useNavigate();
   const handleLogout = () => {
-    window.location.href = 'https://ladya2003.github.io/calculator/';
     localStorage.removeItem('token');
-    if (typeof window !== 'undefined') window.location.reload();
+    navigate('/');
+    window.location.reload();
   };
 
   return (
