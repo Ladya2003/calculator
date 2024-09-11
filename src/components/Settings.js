@@ -32,12 +32,12 @@ const Settings = () => {
       <form onSubmit={handleSubmit}>
         <label>
           Новы лагін:
-          <input type="text" value={login} onChange={(e) => setLogin(e.target.value)} />
+          <input type="text" value={login} onChange={(e) => setLogin(e.target.value)} style={{ marginLeft: '45px' }} />
         </label>
         <br />
         <label>
           Новы пароль:
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ marginLeft: '30px' }} />
         </label>
         <br />
         <button type="submit">Абнавіць</button>
