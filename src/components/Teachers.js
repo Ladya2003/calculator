@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { createTeacher, deleteTeacher, fetchTeachers, updateTeacher } from '../api/teachers';
-import { MemberLanguage, MemberRating, MemberStatus } from '../constants/member';
+import { MemberCurrency, MemberLanguage, MemberRating, MemberStatus } from '../constants/member';
 import { fetchCalculations } from '../api/calculations';
 import LoaderComponent from './LoaderComponent';
 import './styles/Teachers.css';
+import { fetchCurrencies } from '../api/currencies';
 
 const Teachers = () => {
   const [teachers, setTeachers] = useState([]);
@@ -12,25 +13,50 @@ const Teachers = () => {
   const [teacherStatsLastMonth, setTeacherStatsLastMonth] = useState({});
   const [teacherStatsAllTime, setTeacherStatsAllTime] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [convertedAmounts, setConvertedAmounts] = useState([]);
 
   useEffect(() => {
+    const fetchExchangeRates = async () => {
+      const currencies = Object.values(MemberCurrency);
+      const rates = {};
+  
+      for (const currency of currencies) {
+        const currencyResponse = await fetchCurrencies(currency);
+        const rate = currencyResponse.data.rates[MemberCurrency.EUR];
+        rates[currency] = rate;
+      }
+  
+      return rates;
+    };
+
     const fetchTeachersFunctions = async () => {
       setIsLoading(true);
 
       const response = await fetchTeachers();
       response?.data && setTeachers(response?.data.teachers);
 
-      setIsLoading(false);
+      const rates = await fetchExchangeRates();
+      setConvertedAmounts(rates);
 
-      const calculationsResponse = await fetchCalculations();
-      if (calculationsResponse.data) {
-        const calculations = calculationsResponse.data.calculations;
-        calculateTeacherStats(calculations);
-      }
+      setIsLoading(false);
     };
 
     fetchTeachersFunctions();
   }, []);
+
+  useEffect(() => {
+    if (convertedAmounts) {
+      const performCalculations = async () => {
+        const calculationsResponse = await fetchCalculations();
+        if (calculationsResponse.data) {
+          const calculations = calculationsResponse.data.calculations;
+          calculateTeacherStats(calculations);
+        }
+      };
+  
+      performCalculations();
+    }
+  }, [convertedAmounts]);
 
   const calculateTeacherStats = (calculations) => {
     const now = new Date();
@@ -40,8 +66,8 @@ const Teachers = () => {
     const allTimeStats = {};
 
     calculations.forEach(calculation => {
-      const { teacherName, studentName, lessonCost, lessons, createdAt } = calculation;
-      const money = lessonCost * lessons;
+      const { teacherName, studentName, lessonCost, lessons, createdAt, currency } = calculation;
+      const money = lessonCost * lessons * convertedAmounts[currency];
 
       if (!allTimeStats[teacherName]) allTimeStats[teacherName] = { students: new Set(), salary: 0 };
       allTimeStats[teacherName].students.add(studentName);
@@ -107,9 +133,9 @@ const Teachers = () => {
             <th>Статус</th>
             <th>Мова</th>
             <th>Колькасць студэнтаў (за мінулы месяц)</th>
-            <th>Заробак (за мінулы месяц)</th>
+            <th>Заробак (за мінулы месяц, EUR)</th>
             <th>Колькасць студэнтаў (за ўвесь час)</th>
-            <th>Заробак (за ўвесь час)</th>
+            <th>Заробак (за ўвесь час, EUR)</th>
           </tr>
         </thead>
         <tbody>
@@ -155,9 +181,9 @@ const Teachers = () => {
                 </select>
               </td>
               <td>{teacherStatsLastMonth[teacher.name]?.numberOfStudents || 0}</td>
-              <td>{teacherStatsLastMonth[teacher.name]?.salary || 0}</td>
+              <td>{(teacherStatsLastMonth[teacher.name]?.salary || 0).toFixed(2)}</td>
               <td>{teacherStatsAllTime[teacher.name]?.numberOfStudents || 0}</td>
-              <td>{teacherStatsAllTime[teacher.name]?.salary || 0}</td>
+              <td>{(teacherStatsAllTime[teacher.name]?.salary || 0).toFixed(2)}</td>
             </tr>
           ))}
 

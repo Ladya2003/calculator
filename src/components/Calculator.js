@@ -9,13 +9,10 @@ import { displayCurrency, getBackgroundColor, isDifferentMonth } from '../utils/
 import LoaderComponent from './LoaderComponent';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import { useNavigate } from 'react-router-dom';
 
 dayjs.locale('ru');
 
 const Calculator = () => {
-  const navigate = useNavigate();
-
   const [rows, setRows] = useState([]);
   const [currencies, setCurrencies] = useState({
     [MemberCurrency.PLN]: 0,
@@ -40,8 +37,6 @@ const Calculator = () => {
     comments: ''
   });
   const [convertedAmounts, setConvertedAmounts] = useState([]);
-
-  console.log('convertedAmounts', convertedAmounts);
 
   const addButtonDisabled = Object.entries(newCalculation).some(([field, value]) => value === '' && field !== 'comments');
 
@@ -351,16 +346,16 @@ const Calculator = () => {
                     Колькасць урокаў: {rows.filter((r) => dayjs(r.createdAt).isSame(row.createdAt, 'month')).reduce((acc, r) => acc + r.lessons, 0)}
                   </td>
                   <td colSpan={2}>
-                    Агульная сума: {rows.filter((r) => dayjs(r.createdAt).isSame(row.createdAt, 'month')).reduce((acc, r) => acc + (r.lessons * r.lessonCost * convertedAmounts[r.currency]), 0).toFixed(2)}
+                    Агульная сума (EUR): {rows.filter((r) => dayjs(r.createdAt).isSame(row.createdAt, 'month')).reduce((acc, r) => acc + (r.lessons * r.lessonCost * convertedAmounts[r.currency]), 0).toFixed(2)}
                   </td>
-                  <td colSpan={2}>
-                    Агульная сума падатку: {rows.filter((r) => dayjs(r.createdAt).isSame(row.createdAt, 'month')).reduce((acc, r) => acc + (r.lessons * r.lessonCost) * r.taxPercentage * convertedAmounts[r.currency] / 100, 0).toFixed(2)}
+                  <td colSpan={3}>
+                    Агульная сума падатку (EUR): {rows.filter((r) => dayjs(r.createdAt).isSame(row.createdAt, 'month')).reduce((acc, r) => acc + (r.lessons * r.lessonCost) * r.taxPercentage * convertedAmounts[r.currency] / 100, 0).toFixed(2)}
                   </td>
-                  <td colSpan={2}>
-                    Агульная сума на фірму: {rows.filter((r) => dayjs(r.createdAt).isSame(row.createdAt, 'month')).reduce((acc, r) => acc + (r.lessons * r.lessonCost) * r.firmPercentage * convertedAmounts[r.currency] / 100, 0).toFixed(2)}
+                  <td colSpan={3}>
+                    Агульная сума на фірму (EUR): {rows.filter((r) => dayjs(r.createdAt).isSame(row.createdAt, 'month')).reduce((acc, r) => acc + (r.lessons * r.lessonCost) * r.firmPercentage * convertedAmounts[r.currency] / 100, 0).toFixed(2)}
                   </td>
-                  <td colSpan={2}>
-                    Агульная доля кiрылла: {rows.filter((r) => dayjs(r.createdAt).isSame(row.createdAt, 'month')).reduce((acc, r) => acc + ((r.lessons * r.lessonCost) - ((r.lessons * r.lessonCost) * r.taxPercentage / 100) - ((r.lessons * r.lessonCost) * r.firmPercentage / 100) - ((r.teachersMinutes * r.teachersCostFor90Mins) / 90)) * convertedAmounts[r.currency] / 2, 0).toFixed(2)}
+                  <td colSpan={3}>
+                    Агульная доля Кiрылла (EUR): {rows.filter((r) => dayjs(r.createdAt).isSame(row.createdAt, 'month')).reduce((acc, r) => acc + ((r.lessons * r.lessonCost) - ((r.lessons * r.lessonCost) * r.taxPercentage / 100) - ((r.lessons * r.lessonCost) * r.firmPercentage / 100) - ((r.teachersMinutes * r.teachersCostFor90Mins) / 90)) * convertedAmounts[r.currency] / 2, 0).toFixed(2)}
                   </td>
                 </tr>
               }

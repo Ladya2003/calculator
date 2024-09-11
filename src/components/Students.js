@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { createStudent, deleteStudent, fetchStudents, updateStudent } from '../api/students';
-import { MemberLanguage, MemberRating, MemberStatus } from '../constants/member';
+import { MemberCurrency, MemberLanguage, MemberRating, MemberStatus } from '../constants/member';
 import { fetchCalculations } from '../api/calculations';
 import LoaderComponent from './LoaderComponent';
 import './styles/Students.css';
+import { fetchCurrencies } from '../api/currencies';
 
 const Students = () => {
   const [students, setStudents] = useState([]);
@@ -12,37 +13,62 @@ const Students = () => {
   const [studentMoneyLastMonth, setStudentMoneyLastMonth] = useState({});
   const [studentMoneyAllTime, setStudentMoneyAllTime] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [convertedAmounts, setConvertedAmounts] = useState([]);
 
   useEffect(() => {
+    const fetchExchangeRates = async () => {
+      const currencies = Object.values(MemberCurrency);
+      const rates = {};
+  
+      for (const currency of currencies) {
+        const currencyResponse = await fetchCurrencies(currency);
+        const rate = currencyResponse.data.rates[MemberCurrency.EUR];
+        rates[currency] = rate;
+      }
+  
+      return rates;
+    };
+
     const fetchStudentsFunction = async () => {
       setIsLoading(true);
 
       const response = await fetchStudents();
       response.data && setStudents(response.data.students);
 
-      setIsLoading(false);
+      const rates = await fetchExchangeRates();
+      setConvertedAmounts(rates);
 
-      const calculationsResponse = await fetchCalculations();
-      if (calculationsResponse.data) {
-        const calculations = calculationsResponse.data.calculations;
-        calculateMoney(calculations);
-      }
+      setIsLoading(false);
 
     };
 
     fetchStudentsFunction();
   }, []);
 
+  useEffect(() => {
+    if (convertedAmounts) {
+      const performCalculations = async () => {
+        const calculationsResponse = await fetchCalculations();
+        if (calculationsResponse.data) {
+          const calculations = calculationsResponse.data.calculations;
+          calculateMoney(calculations);
+        }
+      };
+  
+      performCalculations();
+    }
+  }, [convertedAmounts]);
+
   const calculateMoney = (calculations) => {
     const now = new Date();
-    const lastMonth = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const lastMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
     const lastMonthCalculations = {};
     const allTimeCalculations = {};
 
     calculations.forEach(calculation => {
-      const { studentName, lessonCost, lessons, createdAt } = calculation;
-      const money = lessonCost * lessons;
+      const { studentName, lessonCost, lessons, createdAt, currency } = calculation;
+      const money = lessonCost * lessons * convertedAmounts[currency];
 
       if (!allTimeCalculations[studentName]) allTimeCalculations[studentName] = 0;
       allTimeCalculations[studentName] += money;
@@ -98,7 +124,7 @@ const Students = () => {
             <th>Статус</th>
             <th>Мова</th>
             <th>Грошы ад студэнта (за мінулы месяц)</th>
-            <th>Грошы ад студэнта (за ўвесь час)</th>
+            <th>Грошы ад студэнта (за ўвесь час, EUR)</th>
           </tr>
         </thead>
         <tbody>
@@ -143,8 +169,8 @@ const Students = () => {
                   )}
                 </select>
               </td>
-              <td>{studentMoneyLastMonth[student.name] || 0}</td>
-              <td>{studentMoneyAllTime[student.name] || 0}</td>
+              <td>{(studentMoneyLastMonth[student.name] || 0).toFixed(2)}</td>
+              <td>{(studentMoneyAllTime[student.name] || 0).toFixed(2)}</td>
             </tr>
           ))}
 

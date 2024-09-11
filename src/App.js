@@ -12,8 +12,6 @@ const App = () => {
   const [role, setRole] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log('role', role);
-
   const handleLogin = async () => {
     const token = localStorage.getItem('token');
     if (token) {
